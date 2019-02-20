@@ -1,5 +1,7 @@
 package Model;
 
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 
 public class MysqlDB {
@@ -7,6 +9,7 @@ public class MysqlDB {
     private Connection Conn;
     private Statement st;
     private ResultSet rs;
+
 
 
     //Constructor
@@ -50,7 +53,25 @@ public class MysqlDB {
 
         return passwordn;
     }
+////////////////////////////////////////////////////////////////////////////////////////////////
+    public void selectStocks(ObservableList<Stocks> observableList){
+        try{
 
+            String query = String.format("SELECT * FROM stocks");
+           // String query =String.format("SELECT * FROM stocks WHERE 'id_person'=%s",ID);
+            rs = st.executeQuery(query);
+            while(rs.next()){
+
+                observableList.add(new Stocks(rs.getString("stock_name"), rs.getInt("quantity"),rs.getDouble("price_paid")));
+
+            }
+
+
+        }catch(Exception e){
+            System.out.println(">>>Error: " + e);
+        }
+
+    }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
     public String selectQuantitySQL(int id){
@@ -110,7 +131,7 @@ public class MysqlDB {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////
     public int selectID(String name){
-        int id = 0;
+        int id = 999;
         try{
 
             String query =String.format("SELECT id FROM register WHERE name=('%s')",name);
@@ -151,5 +172,51 @@ public class MysqlDB {
 
         return name;
     }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void insertStocks(String symbol, double price, int quantity, int ID){
+
+        try{
+
+            String query = String.format("INSERT INTO stocks (stock_name,price_paid,quantity,id_person) VALUES ('%s',%s,%s,%s)",symbol,price,quantity,ID);
+            System.out.println(query);
+            PreparedStatement preparedStatement = Conn.prepareStatement(query);
+            preparedStatement.execute();
+
+         //   SELECT * FROM stocks WHERE id_person=2;
+
+        }catch(Exception e){
+            System.out.println(">>>Error: " + e);
+        }
+
+    }
+
+
+    public Connection getConn() {
+        return Conn;
+    }
+
+    public void setConn(Connection conn) {
+        Conn = conn;
+    }
+
+    public Statement getSt() {
+        return st;
+    }
+
+    public void setSt(Statement st) {
+        this.st = st;
+    }
+
+    public ResultSet getRs() {
+        return rs;
+    }
+
+    public void setRs(ResultSet rs) {
+        this.rs = rs;
+    }
+
+
 
 }

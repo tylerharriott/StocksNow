@@ -4,6 +4,7 @@ package Model;
 import yahoofinance.YahooFinance;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Stocks {
 
@@ -24,8 +25,9 @@ public class Stocks {
         tickerName = name;
         quantity = mquantity;
         pricePaid = mpricePaid;
-        currentPrice = YahooFinance.get(name).getQuote().getPrice();
-        PLValue = 0.0;
+        currentPrice = YahooFinance.get(name).getQuote().getPrice().setScale(2, RoundingMode.CEILING);
+        PLValue =  (Math.round((currentPrice.doubleValue()-pricePaid) * 100.0) / 100.0) * mquantity;
+
 
     }
 
