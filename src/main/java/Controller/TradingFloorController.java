@@ -38,20 +38,12 @@ public class TradingFloorController implements Initializable {
 
 
 
-    public static int sessionID;
+    public int sessionID;
     private MysqlDB mysqlDB = new MysqlDB();
 
     @FXML
     private Label welcomeLabel;
 
-
-
-    public void setSessionID(int number){
-        sessionID = number;
-        welcomeLabel.setText("Welcome " + mysqlDB.selectName(number) + mysqlDB.selectQuantitySQL(number));
-
-
-    }
     @Override
     public void initialize(URL url, ResourceBundle rb){
 
@@ -62,34 +54,47 @@ public class TradingFloorController implements Initializable {
         currentPriceColumn.setCellValueFactory(new PropertyValueFactory<>("currentPrice"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-        System.out.println("Sessions ID: " + sessionID);
-       // mysqlDB.selectStocks(stocksTableAry,sessionID);
-
-
-        tableView.setItems(stocksTableAry);
-
-
     }
 
 
+    public void populateTable(int number){
+        sessionID = number;
+        welcomeLabel.setText("Welcome " + mysqlDB.selectName(number) + mysqlDB.selectQuantitySQL(number));
+
+        mysqlDB.selectStocks(stocksTableAry,sessionID);
+        tableView.setItems(stocksTableAry);
+
+    }
+
     public void btn_AddSymbol() throws IOException {
 
-//        String name = tickerField.getText();
-//        double pricePaid = Double.valueOf(pricePaidField.getText());
-//        int quantity = Integer.valueOf(quantityField.getText());
-//
-//     //  stocksTableAry.add( new Stocks(name,quantity,pricePaid));
-//
-//        mysqlDB.insertStocks(
-//                tickerField.getText(),
-//                Double.valueOf(pricePaidField.getText()),
-//                Integer.valueOf(quantityField.getText())
-//                ,sessionID);
-//
-//
-//        tickerField.clear();
-//        pricePaidField.clear();
-//        quantityField.clear();
+        String name = tickerField.getText();
+        double pricePaid = Double.valueOf(pricePaidField.getText());
+        int quantity = Integer.valueOf(quantityField.getText());
+
+
+     //  stocksTableAry.add( new Stocks(name,quantity,pricePaid));
+
+        mysqlDB.insertStocks(
+                tickerField.getText(),
+                Double.valueOf(pricePaidField.getText()),
+                Integer.valueOf(quantityField.getText())
+                ,sessionID);
+
+
+        tickerField.clear();
+        pricePaidField.clear();
+        quantityField.clear();
+
+        tableView.getItems().clear();
+
+
+        mysqlDB.selectStocks(stocksTableAry,sessionID);
+        System.out.println("--------------------------------");
+        for(Stocks tyler : stocksTableAry){
+            System.out.println(tyler.getTickerName());
+        }
+        System.out.println("--------------------------------");
 
     }
 
