@@ -14,7 +14,10 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TradingFloorController implements Initializable {
 
@@ -36,8 +39,6 @@ public class TradingFloorController implements Initializable {
     @FXML
     private Pane removePane,paneBottomRight;
 
-
-
     public int sessionID;
     private MysqlDB mysqlDB = new MysqlDB();
 
@@ -54,7 +55,33 @@ public class TradingFloorController implements Initializable {
         currentPriceColumn.setCellValueFactory(new PropertyValueFactory<>("currentPrice"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
+        refreshAll();
+        myTimer();
+
+
+
+
     }
+
+    public void myTimer(){
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run() {
+
+
+              tableView.getItems().clear();
+              mysqlDB.selectStocks(stocksTableAry,sessionID);
+              tableView.refresh();
+
+
+            }
+        },0,10*1000);
+
+    }
+
+
 
 
     public void populateTable(int number){
@@ -66,14 +93,7 @@ public class TradingFloorController implements Initializable {
 
     }
 
-    public void btn_AddSymbol() throws IOException {
-
-        String name = tickerField.getText();
-        double pricePaid = Double.valueOf(pricePaidField.getText());
-        int quantity = Integer.valueOf(quantityField.getText());
-
-
-     //  stocksTableAry.add( new Stocks(name,quantity,pricePaid));
+    public void btn_AddSymbol(){
 
         mysqlDB.insertStocks(
                 tickerField.getText(),
@@ -86,27 +106,58 @@ public class TradingFloorController implements Initializable {
         pricePaidField.clear();
         quantityField.clear();
 
-        tableView.getItems().clear();
 
-
+        stocksTableAry.removeAll();
         mysqlDB.selectStocks(stocksTableAry,sessionID);
+        tableView.refresh();
+
         System.out.println("--------------------------------");
         for(Stocks tyler : stocksTableAry){
             System.out.println(tyler.getTickerName());
         }
         System.out.println("--------------------------------");
 
+
+
     }
+
+    public void refreshAll(){
+
+
+        plColumn.setCellFactory(column -> {
+            return new TableCell<Stocks, Double>() {
+                @Override
+                protected void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    setText(empty ? "" : getItem().toString());
+                    setGraphic(null);
+
+                    TableRow<Stocks> currentRow = getTableRow();
+
+                    if (!isEmpty()) {
+
+                        if(item >= 0.00)
+                            currentRow.setStyle("-fx-background-color:lightgreen");
+                        else
+                            currentRow.setStyle("-fx-background-color:lightcoral");
+                    }
+                }
+            };
+        });
+
+
+
+
+    }
+
 
     public void showAddPane(){
         paneBottomRight.toFront();
     }
 
 
-    public void showRemovePane(){
-        removePane.toFront();
-
-    }
+    public void showRemovePane(){ removePane.toFront(); }
 
 
 
