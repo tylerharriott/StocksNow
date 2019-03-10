@@ -54,17 +54,18 @@ public class MysqlDB {
         return passwordn;
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////
-    public void selectStocks(ObservableList<Stocks> observableList){
+    public void selectStocks(ObservableList<Stocks> observableList,int id){
         try{
 
-            String query = String.format("SELECT * FROM stocks");
-           // String query =String.format("SELECT * FROM stocks WHERE 'id_person'=%s",ID);
+           // String query = String.format("SELECT * FROM stocks");
+           String query =String.format("SELECT * FROM stocks WHERE id_person=%s",id);
             rs = st.executeQuery(query);
             while(rs.next()){
 
                 observableList.add(new Stocks(rs.getString("stock_name"), rs.getInt("quantity"),rs.getDouble("price_paid")));
 
             }
+
 
 
         }catch(Exception e){
