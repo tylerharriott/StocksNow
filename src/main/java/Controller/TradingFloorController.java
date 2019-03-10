@@ -9,12 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-
-
-import java.io.IOException;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,7 +33,7 @@ public class TradingFloorController implements Initializable {
     @FXML
     private TableColumn<Stocks, Integer> quantityColumn;
     @FXML
-    private TextField tickerField,pricePaidField,quantityField;
+    private TextField tickerField,pricePaidField,quantityField,infoField;
     @FXML
     private Pane removePane,paneBottomRight;
 
@@ -43,7 +41,7 @@ public class TradingFloorController implements Initializable {
     private MysqlDB mysqlDB = new MysqlDB();
 
     @FXML
-    private Label welcomeLabel;
+    private Label welcomeLabel,priceLabel,percentLabel,highLabel,lowLabel,dividendLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -151,13 +149,43 @@ public class TradingFloorController implements Initializable {
 
     }
 
+    public void btnCheck() throws Exception{
+        String ret;
 
-    public void showAddPane(){
-        paneBottomRight.toFront();
+        if(!infoField.getText().isEmpty()){
+            ret = infoField.getText();
+
+            Stock stock = YahooFinance.get(ret);
+
+            BigDecimal percentChange = stock.getQuote().getChangeInPercent();
+            BigDecimal dayHigh = stock.getQuote().getDayHigh();
+            BigDecimal dayLow = stock.getQuote().getDayLow();
+            BigDecimal price = stock.getQuote().getPrice();
+            BigDecimal dividend = stock.getDividend().getAnnualYieldPercent();
+
+            priceLabel.setText("$" + price);
+            percentLabel.setText(percentChange + "%");
+            highLabel.setText(String.valueOf(dayHigh));
+            lowLabel.setText(String.valueOf(dayLow));
+            dividendLabel.setText(String.valueOf(dividend));
+
+        }
+
+        else{
+            System.out.println("You didn't enter anything");
+        }
+
+
+
     }
 
 
-    public void showRemovePane(){ removePane.toFront(); }
+    public void showAddPane(){paneBottomRight.toFront();
+    }
+
+
+    public void showRemovePane(){ removePane.toFront();
+    }
 
 
 
