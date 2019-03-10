@@ -48,7 +48,7 @@ public class RegisterController implements Initializable {
         Parent home_page = (Parent) loader.load();
 
         TradingFloorController tradingFloorController = loader.getController();
-        tradingFloorController.setSessionID(mysqlDB.selectID(registerNameField.getText()));
+        tradingFloorController.populateTable(mysqlDB.selectID(registerNameField.getText()));
         Scene home_page_scene = new Scene(home_page, 500,400);
         Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         app_stage.setScene(home_page_scene);

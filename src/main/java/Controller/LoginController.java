@@ -37,8 +37,8 @@ public class LoginController {
             Parent home_page = (Parent) loader.load();
 
             TradingFloorController tradingFloorController = loader.getController();
-            tradingFloorController.setSessionID(mysqlDB.selectID(nameTextfield.getText()));
-            System.out.println("Tyler: " + mysqlDB.selectID(nameTextfield.getText()));
+            tradingFloorController.populateTable(mysqlDB.selectID(nameTextfield.getText()));
+            System.out.println("ID: " + mysqlDB.selectID(nameTextfield.getText()));
 
             Scene home_page_scene = new Scene(home_page, 1000,600);
             Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
