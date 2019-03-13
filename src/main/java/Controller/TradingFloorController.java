@@ -33,7 +33,7 @@ public class TradingFloorController implements Initializable {
     @FXML
     private TableColumn<Stocks, Integer> quantityColumn;
     @FXML
-    private TextField tickerField,pricePaidField,quantityField,infoField;
+    private TextField tickerField,pricePaidField,quantityField,infoField,removeStockName;
     @FXML
     private Pane removePane,paneBottomRight;
 
@@ -61,7 +61,7 @@ public class TradingFloorController implements Initializable {
 
     }
 
-    public void myTimer(){
+    public void myTimer(){                      // Works
         Timer timer = new Timer();
 
         timer.schedule(new TimerTask(){
@@ -174,6 +174,21 @@ public class TradingFloorController implements Initializable {
         else{
             System.out.println("You didn't enter anything");
         }
+
+
+
+    }
+
+    public void btnRemove(){
+
+
+            mysqlDB.deleteData(removeStockName.getText().toLowerCase());
+            removeStockName.clear();
+
+            //Refresh
+            stocksTableAry.removeAll();
+            mysqlDB.selectStocks(stocksTableAry,sessionID);
+            tableView.refresh();
 
 
 

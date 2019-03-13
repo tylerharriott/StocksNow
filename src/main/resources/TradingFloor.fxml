@@ -13,12 +13,23 @@
    <children>
       <Pane fx:id="paneBottomLeft" layoutY="300.0" prefHeight="300.0" prefWidth="500.0" style="-fx-border-color: #dfe6e9; -fx-background-color: #c8d6e5;">
          <children>
-            <Label layoutX="218.0" layoutY="28.0" prefHeight="39.0" prefWidth="49.0" text="INFO" underline="true">
+            <Label layoutX="218.0" layoutY="10.0" prefHeight="39.0" prefWidth="49.0" text="INFO" underline="true">
                <font>
-                  <Font size="19.0" />
+                  <Font name="Bodoni 72 Smallcaps Book" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="169.0" layoutY="95.0" text="Label" />
+            <Label layoutX="90.0" layoutY="110.0" text="\% Change:" />
+            <Label layoutX="90.0" layoutY="150.0" text="Day High: " />
+            <Label layoutX="90.0" layoutY="190.0" text="Day Low:" />
+            <Label layoutX="90.0" layoutY="230.0" text="Dividend:" />
+            <Label layoutX="90.0" layoutY="70.0" text="Price:" />
+            <Button layoutX="307.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnCheck" text="Check" />
+            <TextField fx:id="infoField" layoutX="135.0" layoutY="259.0" />
+            <Label fx:id="priceLabel" layoutX="184.0" layoutY="70.0" text="0" />
+            <Label fx:id="percentLabel" layoutX="184.0" layoutY="110.0" text="0" />
+            <Label fx:id="highLabel" layoutX="184.0" layoutY="150.0" text="0" />
+            <Label fx:id="lowLabel" layoutX="184.0" layoutY="190.0" text="0" />
+            <Label fx:id="dividendLabel" layoutX="184.0" layoutY="230.0" text="0" />
          </children></Pane>
       <Pane fx:id="paneTop" prefHeight="300.0" prefWidth="1000.0" style="-fx-border-color: #dfe6e9; -fx-background-color: #c8d6e5;">
          <children>
@@ -43,8 +54,8 @@
                <children>
                   <Button layoutY="1.0" mnemonicParsing="false" onAction="#showAddPane" prefWidth="250.0" text="Add" />
                   <Button layoutX="250.0" layoutY="1.0" mnemonicParsing="false" onAction="#showRemovePane" prefWidth="250.0" text="Remove" />
-                  <TextField layoutX="167.0" layoutY="92.0" />
-                  <Button layoutX="216.0" layoutY="157.0" mnemonicParsing="false" text="Remove" />
+                  <TextField fx:id="removeStockName" layoutX="167.0" layoutY="92.0" />
+                  <Button layoutX="216.0" layoutY="157.0" mnemonicParsing="false" onAction="#btnRemove" text="Remove" />
                </children>
             </Pane>
             <Pane fx:id="paneBottomRight" prefHeight="300.0" prefWidth="500.0" style="-fx-border-color: #dfe6e9; -fx-background-color: #c8d6e5;">

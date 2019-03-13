@@ -11,8 +11,8 @@ public class Driver extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 500, 500));
+        primaryStage.setTitle("Stocks Now");
+        primaryStage.setScene(new Scene(root, 500, 400));
         primaryStage.show();
 
 

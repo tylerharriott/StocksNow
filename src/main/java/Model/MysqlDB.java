@@ -26,7 +26,7 @@ public class MysqlDB {
 
 
         }catch(Exception e){
-            System.out.println(">>>>Error: " + e);
+            System.out.println(">>>>Error (Constructor): " + e);
         }
 
 
@@ -48,7 +48,7 @@ public class MysqlDB {
 
 
         }catch(Exception e){
-            System.out.println(">>>Error: " + e);
+            System.out.println(">>>Error (selectPasswordSQL): " + e);
         }
 
         return passwordn;
@@ -57,19 +57,16 @@ public class MysqlDB {
     public void selectStocks(ObservableList<Stocks> observableList,int id){
         try{
 
-           // String query = String.format("SELECT * FROM stocks");
-           String query =String.format("SELECT * FROM stocks WHERE id_person=%s",id);
+           String query = String.format("SELECT * FROM stocks WHERE id_person=%s",id);
             rs = st.executeQuery(query);
-            while(rs.next()){
 
+            while(rs.next()){
                 observableList.add(new Stocks(rs.getString("stock_name"), rs.getInt("quantity"),rs.getDouble("price_paid")));
 
             }
 
-
-
         }catch(Exception e){
-            System.out.println(">>>Error: " + e);
+            System.out.println(">>>Error (selectStocks): " + e);
         }
 
     }
@@ -90,7 +87,7 @@ public class MysqlDB {
 
 
         }catch(Exception e){
-            System.out.println(">>>Error: " + e);
+            System.out.println(">>>Error (selectQuantitySQL): " + e);
         }
 
         return quantity;
@@ -109,24 +106,24 @@ public class MysqlDB {
 
 
         }catch(Exception e){
-            System.out.println(">>>Error: " + e);
+            System.out.println(">>>Error (insertData): " + e);
         }
 
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void deleteData(){
+    public void deleteData(String name){
 
         try{
+            String query = String.format("DELETE FROM stocks WHERE stock_name = '%s' ",name);
 
-            String query = "DELETE FROM register WHERE name = 'deon' " ;
             PreparedStatement preparedStatement = Conn.prepareStatement(query);
             preparedStatement.execute();
 
 
         }catch(Exception e){
-            System.out.println(">>>Error: " + e);
+            System.out.println(">>>Error (deleteData):" + e);
         }
 
     }
@@ -146,7 +143,7 @@ public class MysqlDB {
 
 
         }catch(Exception e){
-            System.out.println(">>>Error: " + e);
+            System.out.println(">>>Error (selectID): " + e);
         }
 
         return id;
@@ -168,7 +165,7 @@ public class MysqlDB {
 
 
         }catch(Exception e){
-            System.out.println(">>>Error: " + e);
+            System.out.println(">>>Error (selectName): " + e);
         }
 
         return name;
@@ -188,7 +185,7 @@ public class MysqlDB {
          //   SELECT * FROM stocks WHERE id_person=2;
 
         }catch(Exception e){
-            System.out.println(">>>Error: " + e);
+            System.out.println(">>>Error (insertStocks): " + e);
         }
 
     }
