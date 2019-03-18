@@ -17,10 +17,10 @@ public class MysqlDB {
 
 
         try{
-
+//pizza
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaDB","root","George@1$");
+            Conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/javadb?useLegacyDatetimeCode=false&serverTimezone=EST","root","Bakuganfan96");
             st = Conn.createStatement();
 
 
