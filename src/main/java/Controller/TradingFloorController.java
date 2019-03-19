@@ -17,7 +17,9 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TradingFloorController implements Initializable {
+
+
+public class TradingFloorController implements Initializable  {
 
     private ObservableList<Stocks> stocksTableAry = FXCollections.observableArrayList();
 
@@ -37,7 +39,7 @@ public class TradingFloorController implements Initializable {
     @FXML
     private Pane removePane,paneBottomRight;
 
-    public int sessionID;
+    public static int sessionID;
     private MysqlDB mysqlDB = new MysqlDB();
 
     @FXML
@@ -62,20 +64,20 @@ public class TradingFloorController implements Initializable {
     }
 
     public void myTimer(){                      // Works
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask(){
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
-
-
-              tableView.getItems().clear();
-              mysqlDB.selectStocks(stocksTableAry,sessionID);
-              tableView.refresh();
-
-
+                tableView.getItems().clear();
+                mysqlDB.selectStocks(stocksTableAry,sessionID);
+                tableView.refresh();
             }
-        },0,10*1000);
+        };
+
+        Timer timer = new Timer("Timer");
+        long delay = 10000L;
+        long period = 10000L;
+        timer.scheduleAtFixedRate(task,delay,period);
+
 
     }
 
@@ -93,6 +95,7 @@ public class TradingFloorController implements Initializable {
 
     public void btn_AddSymbol(){
 
+        //Inserts stock into database
         mysqlDB.insertStocks(
                 tickerField.getText(),
                 Double.valueOf(pricePaidField.getText()),
@@ -100,21 +103,16 @@ public class TradingFloorController implements Initializable {
                 ,sessionID);
 
 
-        tickerField.clear();
+        //Clears fields
+        tickerField.clear(); // Fixed
         pricePaidField.clear();
         quantityField.clear();
 
 
-        stocksTableAry.removeAll();
+
+        stocksTableAry.clear();
         mysqlDB.selectStocks(stocksTableAry,sessionID);
         tableView.refresh();
-
-        System.out.println("--------------------------------");
-        for(Stocks tyler : stocksTableAry){
-            System.out.println(tyler.getTickerName());
-        }
-        System.out.println("--------------------------------");
-
 
 
     }
@@ -207,3 +205,5 @@ public class TradingFloorController implements Initializable {
 
 
 }
+
+
