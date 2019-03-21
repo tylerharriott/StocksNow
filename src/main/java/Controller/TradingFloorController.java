@@ -43,7 +43,7 @@ public class TradingFloorController implements Initializable  {
     private MysqlDB mysqlDB = new MysqlDB();
 
     @FXML
-    private Label welcomeLabel,priceLabel,percentLabel,highLabel,lowLabel,dividendLabel;
+    private Label priceLabel,percentLabel,highLabel,lowLabel,dividendLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
@@ -86,7 +86,6 @@ public class TradingFloorController implements Initializable  {
 
     public void populateTable(int number){
         sessionID = number;
-        welcomeLabel.setText("Welcome " + mysqlDB.selectName(number) + mysqlDB.selectQuantitySQL(number));
 
         mysqlDB.selectStocks(stocksTableAry,sessionID);
         tableView.setItems(stocksTableAry);
@@ -95,12 +94,22 @@ public class TradingFloorController implements Initializable  {
 
     public void btn_AddSymbol(){
 
-        //Inserts stock into database
-        mysqlDB.insertStocks(
-                tickerField.getText(),
-                Double.valueOf(pricePaidField.getText()),
-                Integer.valueOf(quantityField.getText())
-                ,sessionID);
+       if(!mysqlDB.checkForStockName(tickerField.getText())) {
+
+            mysqlDB.insertStocks(
+                    tickerField.getText(),
+                    Double.valueOf(pricePaidField.getText()),
+                    Integer.valueOf(quantityField.getText())
+                    ,sessionID);
+       }
+
+       else {
+
+            mysqlDB.updateStocks(Integer.valueOf(quantityField.getText()), tickerField.getText(), Double.valueOf(pricePaidField.getText()));
+
+       }
+
+
 
 
         //Clears fields
@@ -184,7 +193,7 @@ public class TradingFloorController implements Initializable  {
             removeStockName.clear();
 
             //Refresh
-            stocksTableAry.removeAll();
+            stocksTableAry.clear();
             mysqlDB.selectStocks(stocksTableAry,sessionID);
             tableView.refresh();
 
