@@ -226,11 +226,12 @@ public class MysqlDB {
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-public void updateStocks(int value, String name){
+public void updateStocks(int value, String name, double price){
+        double totalResult = value * price;
 
     try{
 
-        String query = String.format("UPDATE stocks SET quantity = quantity + %s WHERE stock_name = '%s'",value,name);
+        String query = String.format("UPDATE stocks SET total = total + %s, quantity = quantity + %s, price_paid = total / quantity WHERE stock_name = '%s'",totalResult,value,name);
         System.out.println(query);
         PreparedStatement preparedStatement = Conn.prepareStatement(query);
         preparedStatement.execute();
