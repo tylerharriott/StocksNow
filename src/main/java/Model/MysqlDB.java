@@ -212,8 +212,7 @@ public class MysqlDB {
     public void insertStocks(String symbol, double price, int quantity, int ID){
 
         try{
-
-            String query = String.format("INSERT INTO stocks (stock_name,price_paid,quantity,id_person) VALUES ('%s',%s,%s,%s)",symbol,price,quantity,ID);
+            String query = String.format("INSERT INTO stocks (stock_name,price_paid,quantity,id_person,total) VALUES ('%s',%s,%s,%s,quantity * price_paid) ",symbol,price,quantity,ID);
             System.out.println(query);
             PreparedStatement preparedStatement = Conn.prepareStatement(query);
             preparedStatement.execute();
@@ -231,7 +230,7 @@ public void updateStocks(int value, String name){
 
     try{
 
-        String query = String.format("UPDATE stocks SET quantity = quantity + %s WHERE stock_name = '%s';",value,name);
+        String query = String.format("UPDATE stocks SET quantity = quantity + %s WHERE stock_name = '%s'",value,name);
         System.out.println(query);
         PreparedStatement preparedStatement = Conn.prepareStatement(query);
         preparedStatement.execute();
