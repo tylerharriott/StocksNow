@@ -5,7 +5,27 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 What things you need to install the software
 ```
-Java 10
+Java 10 or later
 Windows or Mac OS
+SQL
+Maven
+Libraries
 ```
+
+1. First, make sure you have the Java 10 or later JDK downloaded
+2. Then, download SQL onto local machine if not already done so.
+3. Import the libraries from the project and check to see if the pom.xml has the code below.
+  ```java
+  <dependency>
+    <groupId>com.yahoofinance-api</groupId>
+    <artifactId>YahooFinanceAPI</artifactId>
+    <version>3.14.0</version>
+</dependency>
+
+<dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-jdk14</artifactId>
+    <version>1.7.25</version>
+</dependency>
+  ```
 ## Running the tests
