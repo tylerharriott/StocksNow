@@ -35,7 +35,7 @@ public class TradingFloorController implements Initializable  {
     @FXML
     private TableColumn<Stocks, Integer> quantityColumn;
     @FXML
-    private TextField tickerField,pricePaidField,quantityField,infoField,removeStockName;
+    private TextField tickerField,pricePaidField,quantityField,infoField,removeStockName,removeQuantity;
     @FXML
     private Pane removePane,paneBottomRight;
 
@@ -110,14 +110,10 @@ public class TradingFloorController implements Initializable  {
        }
 
 
-
-
         //Clears fields
         tickerField.clear(); // Fixed
         pricePaidField.clear();
         quantityField.clear();
-
-
 
         stocksTableAry.clear();
         mysqlDB.selectStocks(stocksTableAry,sessionID);
@@ -126,8 +122,8 @@ public class TradingFloorController implements Initializable  {
 
     }
 
-    public void refreshAll(){
 
+    public void refreshAll(){
 
         plColumn.setCellFactory(column -> {
             return new TableCell<Stocks, Double>() {
@@ -183,30 +179,33 @@ public class TradingFloorController implements Initializable  {
         }
 
 
-
     }
 
-    public void btnRemove(){
 
+    public void btnRemove() throws Exception{
 
-            mysqlDB.deleteData(removeStockName.getText().toLowerCase());
+        Stock stock = YahooFinance.get(removeStockName.getText());
+        BigDecimal price = stock.getQuote().getPrice();
+
+        mysqlDB.deleteData(removeStockName.getText().toLowerCase(),Integer.valueOf(removeQuantity.getText()),price.doubleValue());
             removeStockName.clear();
+            removeQuantity.clear();
 
             //Refresh
             stocksTableAry.clear();
             mysqlDB.selectStocks(stocksTableAry,sessionID);
             tableView.refresh();
 
-
-
     }
 
 
-    public void showAddPane(){paneBottomRight.toFront();
+    public void showAddPane(){
+        paneBottomRight.toFront();
     }
 
 
-    public void showRemovePane(){ removePane.toFront();
+    public void showRemovePane(){
+        removePane.toFront();
     }
 
 

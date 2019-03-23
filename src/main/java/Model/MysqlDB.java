@@ -113,18 +113,21 @@ public class MysqlDB {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void deleteData(String name){
+    public void deleteData(String name, int quantity,double price){
 
         try{
-            String query = String.format("DELETE FROM stocks WHERE stock_name = '%s' ",name);
-
+           // String query = String.format("UPDATE stocks SET total = total - %s , quantity = quantity - %s, price_paid = total / quantity WHERE stock_name = '%s'",price,quantity,name);
+            String query = String.format("UPDATE stocks SET quantity = quantity - %s WHERE stock_name = '%s'",quantity,name);
+            System.out.println(query);
             PreparedStatement preparedStatement = Conn.prepareStatement(query);
             preparedStatement.execute();
 
+            //   SELECT * FROM stocks WHERE id_person=2;
 
         }catch(Exception e){
-            System.out.println(">>>Error (deleteData):" + e);
+            System.out.println(">>>Error (insertStocks): " + e);
         }
+
 
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////
