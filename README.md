@@ -5,11 +5,11 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 What things you need to install the software
 ```
-Java 10 or later
-Windows or Mac OS
-SQL
-Maven
-Libraries
+- Java 10 or later
+- Windows or Mac OS
+- SQL
+- Maven
+- Libraries
 ```
 
 1. First, make sure you have the Java 10 or later JDK downloaded
