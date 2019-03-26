@@ -45,22 +45,23 @@
          </children></Pane>
       <Pane layoutX="500.0" layoutY="300.0" prefHeight="300.0" prefWidth="500.0">
          <children>
+            <Pane fx:id="paneBottomRight" prefHeight="300.0" prefWidth="500.0" style="-fx-border-color: #dfe6e9; -fx-background-color: #c8d6e5;">
+               <children>
+                  <TextField fx:id="tickerField" layoutX="157.0" layoutY="69.0" promptText="Ticker Symbol" />
+                  <TextField fx:id="pricePaidField" layoutX="157.0" layoutY="123.0" promptText="Price Paid" />
+                  <TextField fx:id="quantityField" layoutX="202.0" layoutY="175.0" prefHeight="27.0" prefWidth="77.0" promptText="Quantity" />
+                  <Button layoutX="157.0" layoutY="236.0" mnemonicParsing="false" onAction="#btn_AddSymbol" prefHeight="27.0" prefWidth="167.0" text="Add " />
+                  <Button layoutY="1.0" mnemonicParsing="false" onAction="#showAddPane" prefWidth="250.0" text="Add" />
+                  <Button layoutX="250.0" layoutY="1.0" mnemonicParsing="false" onAction="#showRemovePane" prefWidth="250.0" text="Remove" />
+               </children>
+            </Pane>
             <Pane fx:id="removePane" prefHeight="300.0" prefWidth="500.0" style="-fx-border-color: #dfe6e9; -fx-background-color: #c8d6e5;">
                <children>
                   <Button layoutY="1.0" mnemonicParsing="false" onAction="#showAddPane" prefWidth="250.0" text="Add" />
                   <Button layoutX="250.0" layoutY="1.0" mnemonicParsing="false" onAction="#showRemovePane" prefWidth="250.0" text="Remove" />
                   <TextField fx:id="removeStockName" layoutX="167.0" layoutY="92.0" promptText="Ticker Symbol" />
-                  <Button layoutX="216.0" layoutY="157.0" mnemonicParsing="false" onAction="#btnRemove" text="Remove" />
-               </children>
-            </Pane>
-            <Pane fx:id="paneBottomRight" prefHeight="300.0" prefWidth="500.0" style="-fx-border-color: #dfe6e9; -fx-background-color: #c8d6e5;">
-               <children>
-                  <TextField fx:id="tickerField" layoutX="157.0" layoutY="69.0" promptText="Ticker Symbol" />
-                  <TextField fx:id="pricePaidField" layoutX="157.0" layoutY="123.0" promptText="Price Paid" />
-                  <TextField fx:id="quantityField" layoutX="157.0" layoutY="176.0" promptText="Quantity" />
-                  <Button layoutX="157.0" layoutY="236.0" mnemonicParsing="false" onAction="#btn_AddSymbol" prefHeight="27.0" prefWidth="167.0" text="Add " />
-                  <Button layoutY="1.0" mnemonicParsing="false" onAction="#showAddPane" prefWidth="250.0" text="Add" />
-                  <Button layoutX="250.0" layoutY="1.0" mnemonicParsing="false" onAction="#showRemovePane" prefWidth="250.0" text="Remove" />
+                  <Button layoutX="217.0" layoutY="199.0" mnemonicParsing="false" onAction="#btnRemove" text="Remove" />
+                  <TextField fx:id="removeQuantity" layoutX="217.0" layoutY="137.0" prefHeight="27.0" prefWidth="67.0" promptText="Quantity" />
                </children>
             </Pane>
          </children>
