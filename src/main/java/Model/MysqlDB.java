@@ -20,7 +20,7 @@ public class MysqlDB {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaDB","root","George@1$");
+            Conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/JavaDB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","George@1$");
             st = Conn.createStatement();
 
 
@@ -116,13 +116,31 @@ public class MysqlDB {
     public void deleteData(String name, int quantity,double price){
 
         try{
-           // String query = String.format("UPDATE stocks SET total = total - %s , quantity = quantity - %s, price_paid = total / quantity WHERE stock_name = '%s'",price,quantity,name);
-            String query = String.format("UPDATE stocks SET quantity = quantity - %s WHERE stock_name = '%s'",quantity,name);
+
+            String query4 = String.format("UPDATE stocks set quantity = quantity - %s WHERE stock_name = '%s'",quantity,name);
+            System.out.println(query4);
+            PreparedStatement preparedStatement4 = Conn.prepareStatement(query4);
+            preparedStatement4.execute();
+
+
+
+            String query2 = "DELETE FROM stocks WHERE quantity <= 0";
+            System.out.println(query2);
+            PreparedStatement preparedStatement2 = Conn.prepareStatement(query2);
+            preparedStatement2.execute();
+
+
+
+            String query = String.format("UPDATE stocks SET total = total - (total / quantity) , price_paid = total / quantity WHERE stock_name = '%s'",name);
+            //String query = String.format("UPDATE stocks SET quantity = quantity - %s WHERE stock_name = '%s'",quantity,name);
             System.out.println(query);
             PreparedStatement preparedStatement = Conn.prepareStatement(query);
             preparedStatement.execute();
 
-            //   SELECT * FROM stocks WHERE id_person=2;
+
+
+
+
 
         }catch(Exception e){
             System.out.println(">>>Error (insertStocks): " + e);
