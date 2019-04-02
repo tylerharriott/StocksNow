@@ -53,4 +53,14 @@ public class HashMD5 {
         return ret;
     }
 
+
+    public String printMe(String name){
+        String ret = "";
+
+        name = name + "1111";
+        ret =name;
+
+        return ret;
+    }
+
 }
