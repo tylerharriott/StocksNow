@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -62,5 +63,30 @@ public class RegisterController implements Initializable {
         return hashMD5.generatePassword(passwordToHash);
 
     }
+
+    public void goBackSignUp(ActionEvent actionEvent){
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Register.fxml"));
+        Parent home_page = null;
+
+        try {
+            home_page = (Parent) loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LoginController login = loader.getController();
+
+
+        Scene home_page_scene = new Scene(home_page, 500,400);
+        Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        app_stage.setScene(home_page_scene);
+        app_stage.show();
+
+
+
+    }
+
+
 
 }

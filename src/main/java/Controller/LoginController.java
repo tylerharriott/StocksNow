@@ -6,14 +6,14 @@ import Model.MysqlDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
-import yahoofinance.Stock;
 
 import java.io.IOException;
 
@@ -44,6 +44,9 @@ public class LoginController {
             Stage app_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             app_stage.setScene(home_page_scene);
             app_stage.show();
+            Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+            app_stage.setX((primScreenBounds.getWidth() - app_stage.getWidth()) / 2);
+            app_stage.setY((primScreenBounds.getHeight() - app_stage.getHeight()) / 4);
         }
         else {
             System.out.println("Wrong password entered: Try again!");

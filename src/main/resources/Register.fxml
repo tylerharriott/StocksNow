@@ -17,6 +17,6 @@
             <Font name="Bodoni 72 Smallcaps Book" size="30.0" />
          </font>
       </Label>
-      <Button layoutX="40.0" layoutY="348.0" mnemonicParsing="false" text="Go Back" />
+      <Button layoutX="40.0" layoutY="348.0" mnemonicParsing="false" onAction="#goBackSignUp" text="Go Back" />
    </children>
 </AnchorPane>

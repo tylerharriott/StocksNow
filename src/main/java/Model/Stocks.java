@@ -26,8 +26,7 @@ public class Stocks {
         quantity = mquantity;
         pricePaid = mpricePaid;
         currentPrice = YahooFinance.get(name).getQuote().getPrice().setScale(2, RoundingMode.CEILING);
-        PLValue =  (Math.round((currentPrice.doubleValue()-pricePaid) * 100.00) / 100.00) * mquantity;
-
+        PLValue = (Math.round(((currentPrice.doubleValue() * quantity) - pricePaid) * 100.00) / 100.00);
 
     }
 

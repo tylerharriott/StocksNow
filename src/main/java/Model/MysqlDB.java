@@ -1,11 +1,13 @@
 package Model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 
 public class MysqlDB {
 
+    private ObservableList<Stocks> stocksTemp = FXCollections.observableArrayList();
     private Connection Conn;
     private Statement st;
     private ResultSet rs;
@@ -55,19 +57,23 @@ public class MysqlDB {
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////
     public void selectStocks(ObservableList<Stocks> observableList,int id){
-        try{
+            try {
 
-           String query = String.format("SELECT * FROM stocks WHERE id_person=%s",id);
-            rs = st.executeQuery(query);
+                String query = String.format("select stock_name, sum(quantity),sum(total) from stocks WHERE id_person= %s group by stock_name ", id);
+                rs = st.executeQuery(query);
 
-            while(rs.next()){
-                observableList.add(new Stocks(rs.getString("stock_name"), rs.getInt("quantity"),rs.getDouble("price_paid")));
+                while (rs.next()) {
 
+                            observableList.add(new Stocks(rs.getString("stock_name"), rs.getInt("sum(quantity)"), rs.getDouble("sum(total)")));
+
+                    }
+
+
+            } catch (Exception e) {
+                System.out.println(">>>Error (selectStocks): " + e);
             }
 
-        }catch(Exception e){
-            System.out.println(">>>Error (selectStocks): " + e);
-        }
+
 
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,11 +119,11 @@ public class MysqlDB {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public void deleteData(String name, int quantity,double price){
+    public void deleteData(String name, int quantity,int id){
 
         try{
 
-            String query4 = String.format("UPDATE stocks set quantity = quantity - %s WHERE stock_name = '%s'",quantity,name);
+            String query4 = String.format("UPDATE stocks set quantity = quantity - %s WHERE stock_name = '%s' AND id_person = %s LIMIT 1",quantity,name,id);
             System.out.println(query4);
             PreparedStatement preparedStatement4 = Conn.prepareStatement(query4);
             preparedStatement4.execute();
@@ -130,9 +136,7 @@ public class MysqlDB {
             preparedStatement2.execute();
 
 
-
-            String query = String.format("UPDATE stocks SET total = total - (total / quantity) , price_paid = total / quantity WHERE stock_name = '%s'",name);
-            //String query = String.format("UPDATE stocks SET quantity = quantity - %s WHERE stock_name = '%s'",quantity,name);
+            String query = String.format("UPDATE stocks SET total = price_paid * quantity WHERE stock_name = '%s' AND id_person = %s LIMIT 1",name,id);
             System.out.println(query);
             PreparedStatement preparedStatement = Conn.prepareStatement(query);
             preparedStatement.execute();

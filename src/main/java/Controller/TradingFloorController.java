@@ -94,20 +94,13 @@ public class TradingFloorController implements Initializable  {
 
     public void btn_AddSymbol(){
 
-       if(!mysqlDB.checkForStockName(tickerField.getText())) {
+           mysqlDB.insertStocks(
+                   tickerField.getText(),
+                   Double.valueOf(pricePaidField.getText()),
+                   Integer.valueOf(quantityField.getText())
+                   ,sessionID);
 
-            mysqlDB.insertStocks(
-                    tickerField.getText(),
-                    Double.valueOf(pricePaidField.getText()),
-                    Integer.valueOf(quantityField.getText())
-                    ,sessionID);
-       }
 
-       else {
-
-            mysqlDB.updateStocks(Integer.valueOf(quantityField.getText()), tickerField.getText(), Double.valueOf(pricePaidField.getText()));
-
-       }
 
 
         //Clears fields
@@ -187,7 +180,7 @@ public class TradingFloorController implements Initializable  {
         Stock stock = YahooFinance.get(removeStockName.getText());
         BigDecimal price = stock.getQuote().getPrice();
 
-        mysqlDB.deleteData(removeStockName.getText().toLowerCase(),Integer.valueOf(removeQuantity.getText()),price.doubleValue());
+        mysqlDB.deleteData(removeStockName.getText().toLowerCase(),Integer.valueOf(removeQuantity.getText()),sessionID);
             removeStockName.clear();
             removeQuantity.clear();
 
