@@ -1,13 +1,10 @@
 package Model;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.*;
 
 public class MysqlDB {
 
-    private ObservableList<Stocks> stocksTemp = FXCollections.observableArrayList();
     private Connection Conn;
     private Statement st;
     private ResultSet rs;
@@ -76,29 +73,6 @@ public class MysqlDB {
 
 
     }
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-    public String selectQuantitySQL(int id){
-        String quantity ="";
-        try{
-
-            String query =String.format("SELECT `quantity` FROM stocks WHERE `id_person`=%s",id);
-            rs = st.executeQuery(query);
-
-            while(rs.next()){
-
-                quantity = rs.getString("quantity");
-
-            }
-
-
-        }catch(Exception e){
-            System.out.println(">>>Error (selectQuantitySQL): " + e);
-        }
-
-        return quantity;
-    }
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -174,65 +148,6 @@ public class MysqlDB {
         return id;
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    public void selectName(String name){
-
-        try{
-
-            String query =String.format("SELECT stock_name FROM stocks WHERE stock_name='%s'",name);
-            rs = st.executeQuery(query);
-
-            while(rs.next()) {
-
-                name = rs.getString("name");
-
-            }
-
-
-        }catch(Exception e){
-            System.out.println(">>>Error (selectName): " + e);
-        }
-
-
-    }
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    public boolean checkForStockName(String name){
-
-        boolean ret =false;
-        String value = "";
-
-        try{
-
-            String query = String.format("SELECT IFNULL( (SELECT stock_name FROM stocks WHERE stock_name = '%s' ) ,'not found')",name);
-            rs = st.executeQuery(query);
-            while(rs.next()) {
-
-                value = rs.getString(1);
-
-            }
-
-
-
-        }catch(Exception e){
-            System.out.println(">>>Error (check Failed): " + e);
-        }
-
-        if( !value.equals("not found") ){
-            ret = true;
-        }
-
-
-
-        return ret;
-    }
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////
     public void insertStocks(String symbol, double price, int quantity, int ID){
 
@@ -251,23 +166,6 @@ public class MysqlDB {
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-public void updateStocks(int value, String name, double price){
-        double totalResult = value * price;
-
-    try{
-
-        String query = String.format("UPDATE stocks SET total = total + %s, quantity = quantity + %s, price_paid = total / quantity WHERE stock_name = '%s'",totalResult,value,name);
-        System.out.println(query);
-        PreparedStatement preparedStatement = Conn.prepareStatement(query);
-        preparedStatement.execute();
-
-
-    }catch(Exception e){
-        System.out.println(">>>Error (updateStocks): " + e);
-    }
-
-}
-
 
     public Connection getConn() {
         return Conn;

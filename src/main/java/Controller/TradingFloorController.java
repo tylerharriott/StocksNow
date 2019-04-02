@@ -29,7 +29,7 @@ public class TradingFloorController implements Initializable  {
     @FXML
     private TableColumn<Stocks,String> nameColumn;
     @FXML
-    private TableColumn<Stocks,Double> plColumn, paidColumn;
+    private TableColumn<Stocks,Double> plColumn, totalColumn;
     @FXML
     private TableColumn<Stocks, BigDecimal> currentPriceColumn;
     @FXML
@@ -51,7 +51,7 @@ public class TradingFloorController implements Initializable  {
         //set up the columns and the table
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("tickerName"));
         plColumn.setCellValueFactory(new PropertyValueFactory<>("PLValue"));
-        paidColumn.setCellValueFactory(new PropertyValueFactory<>("pricePaid"));
+        totalColumn.setCellValueFactory(new PropertyValueFactory<>("pricePaid"));
         currentPriceColumn.setCellValueFactory(new PropertyValueFactory<>("currentPrice"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
