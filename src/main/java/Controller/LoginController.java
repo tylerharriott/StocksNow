@@ -10,12 +10,16 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class LoginController {
@@ -24,6 +28,8 @@ public class LoginController {
     private TextField nameTextfield;
     @FXML
     private PasswordField passwordTextfield;
+    @FXML
+    private Label wrongPassLabel;
 
     private HashMD5 hashMD5 = new HashMD5();
     private MysqlDB mysqlDB = new MysqlDB();
@@ -49,6 +55,11 @@ public class LoginController {
             app_stage.setY((primScreenBounds.getHeight() - app_stage.getHeight()) / 4);
         }
         else {
+
+            nameTextfield.clear();
+            passwordTextfield.clear();
+            wrongPassLabel.setVisible(true);
+            timerForlabel();
             System.out.println("Wrong password entered: Try again!");
         }
 
@@ -72,6 +83,16 @@ public class LoginController {
     }
 
 
+    public void timerForlabel() {
+        TimerTask task = new TimerTask() {
+            public void run() {
+               wrongPassLabel.setVisible(false);
+            }
+        };
+        Timer timer = new Timer("Timer");
 
+        long delay = 8000L;
+        timer.schedule(task, delay);
+    }
 
 }

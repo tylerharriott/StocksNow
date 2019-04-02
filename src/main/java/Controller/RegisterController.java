@@ -66,7 +66,7 @@ public class RegisterController implements Initializable {
 
     public void goBackSignUp(ActionEvent actionEvent){
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Register.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
         Parent home_page = null;
 
         try {
